@@ -55,13 +55,13 @@ async fn delete(id: web::Path<i32>) -> HttpResponse {
 }
 
 // this function will initialize all the route handlers
-pub fn init_routes(comfig: &mut web::ServiceConfig) {
-    comfig.service(find_all);
-    comfig.service(find);
-    comfig.service(create);
-    comfig.service(update);
-    comfig.service(delete);
-    comfig.service(index);
-    comfig.service(print_name);
+pub fn init_routes(config: &mut web::ServiceConfig) {
+    config.service(find_all);
+    config.service(find);
+    config.service(create);
+    config.service(update);
+    config.service(delete);
+    config.service(index);
+    config.service(print_name);
 
 }
