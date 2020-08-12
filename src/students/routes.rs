@@ -1,5 +1,21 @@
 use crate::{Student, Students};
+use actix_web::http::{StatusCode};
 use actix_web::{delete, get, post, put, web, HttpResponse};
+
+#[get("/")]
+async fn index() -> HttpResponse {
+    HttpResponse::build(StatusCode::OK)
+        .content_type("text/html; charset=utf-8")
+        .body(include_str!("../static/index.html"))
+}
+
+#[post("/create")]
+async fn print_name(student: web::Form<Student>) -> HttpResponse {
+    let student = Students::create(student.clone());
+    HttpResponse::Ok()
+    .content_type("text/html; charset=utf-8")
+    .body(include_str!("../static/index.html"))
+}
 
 // This route handler will list all the data available
 #[get("/students")]
@@ -45,4 +61,7 @@ pub fn init_routes(comfig: &mut web::ServiceConfig) {
     comfig.service(create);
     comfig.service(update);
     comfig.service(delete);
+    comfig.service(index);
+    comfig.service(print_name);
+
 }
