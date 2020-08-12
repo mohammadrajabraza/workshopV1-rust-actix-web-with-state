@@ -1,0 +1,18 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    padding: 2rem;
+}
+
+.form-radio-inline {
+    padding: 0.36rem 1.2rem;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+}
+
+.text-light-gray {
+    color: #495057;
+    font-size: 1rem;
+}
