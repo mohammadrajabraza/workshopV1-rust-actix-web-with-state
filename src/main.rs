@@ -1,5 +1,5 @@
 // Necessary imports here 
-use actix_web::{App, HttpServer};
+use actix_web::{App, middleware, HttpServer};
 
 // imports for data store
 use std::collections::HashMap;
@@ -7,7 +7,7 @@ use std::sync::Mutex;
 use state::Storage;
 
 // imports for de/serializing objects
-use serde::{Deserialize};
+use serde::{Serialize, Deserialize};
 
 // importing student module(s)
 mod students;
@@ -25,8 +25,9 @@ async fn main() -> std::io::Result<()> {
     // Initializing server
     HttpServer::new(|| {
         App::new()
-        // Associating service(s)/route_handler(s)
-         .configure(students::routes::init_routes)
+            .wrap(middleware::Logger::default())
+            // Associating service(s)/route_handler(s)
+            .configure(students::routes::init_routes)
     })
     // Binding socket address server will receive requests on
     .bind("127.0.0.1:5000")?
@@ -37,7 +38,7 @@ async fn main() -> std::io::Result<()> {
 // -------------------------- Models -----------------------------
 
 // This struct will be used for taking input from user's request
-#[derive(Deserialize)]
+#[derive(Clone, Serialize, Deserialize)]
 struct Student {
     first_name: String,
     last_name: String,
