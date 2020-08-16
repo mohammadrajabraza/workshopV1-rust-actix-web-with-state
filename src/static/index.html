@@ -74,6 +74,38 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
+  <script>
+    const btn_submit_student = document.getElementById("btn-student-submit");
+    btn_submit_student.addEventListener("click", respondStudentSubmit);
+
+    function respondStudentSubmit() {
+      const first_name = document.getElementById("first_name").value;
+      const last_name = document.getElementById("last_name").value;
+      const department = document.getElementById("department").value;
+      const is_graduated = document.getElementById('is-graduated1').checked ? true : false;
+      const age = JSON.parse(document.getElementById("age").value);
+
+      $.ajax({
+        url: "/students",
+        method: "POST",
+        contentType: "application/json",
+        dataType: "json",
+        data: JSON.stringify({
+          first_name: first_name,
+          last_name: last_name,
+          department: department,
+          is_graduated: is_graduated,
+          age: age,
+        }),
+        success: function (data) {
+          addRowInTable(data);
+        },
+        complete: function(){
+          resetStudentFields();
+        }
+      });
+    }
+    </script>
 </body>
 
 </html>
