@@ -48,7 +48,7 @@ struct Student {
 }
 
 // This struct will be used for retrieval from data sources
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 struct Students {
     id: i32,
     first_name: String,
@@ -150,7 +150,7 @@ pub fn add_to_id() {
 
 // Getter function to get Global ID
 pub fn get_id() -> i32 {
-    let mut id :i32;
+    let id :i32;
     unsafe {
         add_to_id();
         id = AUTO_INCR_ID;

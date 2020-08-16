@@ -9,14 +9,6 @@ async fn index() -> HttpResponse {
         .body(include_str!("../static/index.html"))
 }
 
-#[post("/create")]
-async fn print_name(student: web::Form<Student>) -> HttpResponse {
-    let student = Students::create(student.clone());
-    HttpResponse::Ok()
-    .content_type("text/html; charset=utf-8")
-    .body(include_str!("../static/index.html"))
-}
-
 // This route handler will list all the data available
 #[get("/students")]
 async fn find_all() -> HttpResponse {
@@ -35,8 +27,7 @@ async fn find(id: web::Path<i32>) -> HttpResponse {
 #[post("/students")]
 async fn create(student : web::Json<Student>) -> HttpResponse {
     let student = Students::create(student.into_inner());
-    HttpResponse::Ok().body(format!("Created record : {:?}",student))
-
+    HttpResponse::Ok().json(student)
 }
 
 // This route handler will update an existing record
@@ -62,6 +53,4 @@ pub fn init_routes(config: &mut web::ServiceConfig) {
     config.service(update);
     config.service(delete);
     config.service(index);
-    config.service(print_name);
-
 }
