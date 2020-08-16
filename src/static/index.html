@@ -122,6 +122,18 @@
       data_table.appendChild(table_row);
     }
     
+    function resetStudentFields() {
+      const inputs = document.querySelectorAll('.form-inline input[type = "text"], .form-inline input[type = "number"]');
+      for (let input of inputs){
+        input.value = '';
+      }
+
+      const radioInputs = document.getElementsByName('is_graduated');
+      for (let radio of radioInputs) {
+        radio.checked = false;
+      }
+    }
+    
     </script>
 </body>
 
