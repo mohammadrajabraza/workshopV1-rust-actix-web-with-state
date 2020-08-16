@@ -105,6 +105,23 @@
         }
       });
     }
+    
+    function addRowInTable(data) {
+      const data_table = document.getElementById('data-table-body');
+      let table_row = document.createElement('tr');
+      table_row.innerHTML = `<th scope="row">${data.id}</th>
+            <td>${data.first_name}</td>
+            <td>${data.last_name}</td>
+            <td>${data.department}</td>
+            <td>${data.is_graduated}</td>
+            <td>${data.age}</td>
+            <td><button id="btn-student-update" data-id="${data.id}" type="button" class="btn btn-primary">Update
+          </button></td>
+            <td><button id="btn-student-delete" data-id="${data.id}" type="button" class="btn btn-danger">Delete
+          </button></td>` ;
+      data_table.appendChild(table_row);
+    }
+    
     </script>
 </body>
 
