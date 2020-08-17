@@ -1,6 +1,9 @@
 // Necessary imports here 
 use actix_web::{App, middleware, HttpServer};
 
+// Import for static files
+use actix_files as fs; 
+
 // imports for data store
 use std::collections::HashMap;
 use std::sync::Mutex;
@@ -28,6 +31,9 @@ async fn main() -> std::io::Result<()> {
             .wrap(middleware::Logger::default())
             // Associating service(s)/route_handler(s)
             .configure(students::routes::init_routes)
+            // Create Service to use Static Files in Static Folder 
+            // new method required two prametoer first for url path & socend for directory
+            .service(fs::Files::new("/", "/static").show_files_listing())
     })
     // Binding socket address server will receive requests on
     .bind("127.0.0.1:5000")?
