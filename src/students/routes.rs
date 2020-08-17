@@ -13,7 +13,7 @@ async fn index() -> HttpResponse {
 #[get("/students")]
 async fn find_all() -> HttpResponse {
     let students = Students::find_all();
-    HttpResponse::Ok().body(format!("List of students : {:?}",students))
+    HttpResponse::Ok().json(students)
 }
 
 // This route handler will list data with specific id
