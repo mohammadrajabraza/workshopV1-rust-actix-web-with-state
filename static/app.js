@@ -137,7 +137,7 @@
 
     function respondStudentDeleteRow(event) {
 
-      let decision = prompt('Type DELETE to delete this record', 'No');
+      let decision = confirm('Type DELETE to delete this record', 'No');
       decision = decision.toLowerCase();
       
       if (decision === 'delete'){

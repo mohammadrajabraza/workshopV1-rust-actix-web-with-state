@@ -14,3 +14,4 @@ actix-rt = "1.0"
 state = { version = "0.4", features = ["const_fn"] }
 
 serde = "1.0"
+actix-files = "0.2.2"
