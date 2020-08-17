@@ -51,7 +51,16 @@
         </div>
       </form>
       <br />
-      <h3 class="text-success mt-3">Student Details</h3>
+      <div class="d-flex">
+        <div class="p-2">
+          <h3 class="text-success mt-3">Student Details</h3>
+        </div>
+        <div class="ml-auto p-2">
+          <button id="btn-student-refresh" type="button" class="btn btn-success mt-3">
+            Refresh
+          </button>
+        </div>
+      </div>
       <table id="data-table" class="table table-responsive{-md} table-md table-light text-success">
         <thead>
           <tr>
@@ -234,7 +243,6 @@
           url: `/students/${id}`,
           method: "DELETE",
           success: function() {
-            console.log('Successfully deleted');
             clicked_row.remove();
           }
         });
@@ -242,6 +250,48 @@
       
     }
 
+
+    /*
+    ------------------  Refresh table data ------------------
+    */
+    
+    // Getting Submit button ID on index.html page
+    const btn_refresh_table = document.getElementById("btn-student-refresh");
+    
+    // Associating event listener on submit button
+    btn_refresh_table.addEventListener("click", respondStudentRefresh);
+
+    function respondStudentRefresh() {
+
+      $.ajax({
+        url: `/students`,
+        method: "GET",
+        success: function(data){
+          populateDataInTable(data);
+        }
+      });
+    }
+
+    function populateDataInTable(records) {
+      const data_table = document.getElementById('data-table-body');
+      let table_html = "";
+
+      for (let record of records) {
+        table_html = table_html
+          .concat(`<tr><th scope="row">${record.id}</th>
+            <td>${record.first_name}</td>
+            <td>${record.last_name}</td>
+            <td>${record.department}</td>
+            <td>${record.is_graduated}</td>
+            <td>${record.age}</td>
+            <td><button id="btn-student-update${record.id}" data-id="${record.id}" type="button" class="btn btn-primary" onclick="respondStudentUpdateRow(event)" >Update Row</button>
+            </td>
+            <td><button id="btn-student-delete${record.id}" data-id="${record.id}" type="button" class="btn btn-danger" onclick="respondStudentDeleteRow(event)">Delete Row</button>
+            </td>
+          </tr>`)
+      }
+      data_table.innerHTML = table_html;
+    }
 
     // function to get data from input fields
     function getInputFieldsData(){
