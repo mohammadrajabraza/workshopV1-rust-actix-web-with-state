@@ -6,8 +6,14 @@ use actix_web::{delete, get, post, put, web, HttpResponse};
 async fn index() -> HttpResponse {
     HttpResponse::build(StatusCode::OK)
         .content_type("text/html; charset=utf-8")
-        .body(include_str!("../static/index.html"))
+        .body(include_str!("../../static/index.html"))
+    
 }
+// #[get("/app")]
+// async fn js_file() -> HttpResponse {
+//     HttpResponse::build(StatusCode::OK)
+//         .body(include_str!("../static/app.js"))
+// }
 
 // This route handler will list all the data available
 #[get("/students")]
@@ -52,5 +58,7 @@ pub fn init_routes(config: &mut web::ServiceConfig) {
     config.service(create);
     config.service(update);
     config.service(delete);
+
     config.service(index);
+    
 }

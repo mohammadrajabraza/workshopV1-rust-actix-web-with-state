@@ -1,5 +1,6 @@
 // Necessary imports here 
 use actix_web::{App, middleware, HttpServer};
+use actix_files as fs;
 
 // imports for data store
 use std::collections::HashMap;
@@ -28,9 +29,11 @@ async fn main() -> std::io::Result<()> {
             .wrap(middleware::Logger::default())
             // Associating service(s)/route_handler(s)
             .configure(students::routes::init_routes)
+            .service(fs::Files::new("/", "/static").show_files_listing())
+            
     })
     // Binding socket address server will receive requests on
-    .bind("127.0.0.1:5000")?
+    .bind("127.0.0.1:5500")?
     .run()
     .await
 }
