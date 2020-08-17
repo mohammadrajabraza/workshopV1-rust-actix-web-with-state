@@ -6,7 +6,8 @@ use actix_web::{delete, get, post, put, web, HttpResponse};
 async fn index() -> HttpResponse {
     HttpResponse::build(StatusCode::OK)
         .content_type("text/html; charset=utf-8")
-        .body(include_str!("../static/index.html"))
+        // Change Static Folder Path to root
+        .body(include_str!("../../static/index.html"))
 }
 
 // This route handler will list all the data available
