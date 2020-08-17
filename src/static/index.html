@@ -127,7 +127,7 @@
             <td>${data.age}</td>
             <td><button id="btn-student-update${data.id}" data-id="${data.id}" type="button" class="btn btn-primary" onclick="respondStudentUpdateRow(event)" >Update Row
           </button></td>
-            <td><button id="btn-student-delete${data.id}" data-id="${data.id}" type="button" class="btn btn-danger">Delete Row
+            <td><button id="btn-student-delete${data.id}" data-id="${data.id}" type="button" class="btn btn-danger" onclick="respondStudentDeleteRow(event)">Delete Row
           </button></td>` ;
       data_table.appendChild(table_row);
     }
@@ -135,6 +135,7 @@
     /*
     ------------  Update data related operations ------------
     */
+
     // function respond on update row button click
     // get the fields filled with data and enable update button
     function respondStudentUpdateRow(event) {
@@ -172,6 +173,7 @@
     // Associating event listener on submit button
     btn_update_student.addEventListener("click", respondStudentUpdate);
 
+    // function sends ajax request to update data store also update the data table
     function respondStudentUpdate() {
       // getting current data in the fields to be updated
       const id = clicked_row.children[0].textContent;
@@ -206,8 +208,38 @@
             <td>${data.age}</td>
             <td><button id="btn-student-update${data.id}" data-id="${data.id}" type="button" class="btn btn-primary" onclick="respondStudentUpdateRow(event)" >Update Row
           </button></td>
-            <td><button id="btn-student-delete${data.id}" data-id="${data.id}" type="button" class="btn btn-danger">Delete Row
+            <td><button id="btn-student-delete${data.id}" data-id="${data.id}" type="button" class="btn btn-danger" onclick="respondStudentDeleteRow(event)" >Delete Row
           </button></td>` ;
+    }
+
+    /*
+    ------------  Delete data related operations ------------
+    */
+
+    function respondStudentDeleteRow(event) {
+
+      let decision = prompt('Type DELETE to delete this record', 'No');
+      decision = decision.toLowerCase();
+      
+      if (decision === 'delete'){
+        // getting clicked button
+        const clicked_delete_button = event.srcElement;
+        // getting row having elements to be updated
+        clicked_row = clicked_delete_button.parentElement.parentElement;
+
+        // getting current data in the fields to be updated
+        const id = clicked_row.children[0].textContent;
+
+        $.ajax({
+          url: `/students/${id}`,
+          method: "DELETE",
+          success: function() {
+            console.log('Successfully deleted');
+            clicked_row.remove();
+          }
+        });
+      }
+      
     }
 
 
